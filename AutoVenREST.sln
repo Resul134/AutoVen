@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.852
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoVenREST", "AutoVenREST\AutoVenREST.csproj", "{C03925A3-8DB9-457D-AB89-CBA75A385798}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoVenREST", "AutoVenREST\AutoVenREST.csproj", "{C03925A3-8DB9-457D-AB89-CBA75A385798}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelLib", "ModelLib\ModelLib.csproj", "{03D66AD6-4461-44A9-AD6C-6CF8029B79FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelLib", "ModelLib\ModelLib.csproj", "{03D66AD6-4461-44A9-AD6C-6CF8029B79FF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "TestLogging\UnitTest.csproj", "{D090DF9D-A547-49F0-A462-85E2A8C8DE21}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{03D66AD6-4461-44A9-AD6C-6CF8029B79FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03D66AD6-4461-44A9-AD6C-6CF8029B79FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03D66AD6-4461-44A9-AD6C-6CF8029B79FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D090DF9D-A547-49F0-A462-85E2A8C8DE21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D090DF9D-A547-49F0-A462-85E2A8C8DE21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D090DF9D-A547-49F0-A462-85E2A8C8DE21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D090DF9D-A547-49F0-A462-85E2A8C8DE21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

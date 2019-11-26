@@ -11,9 +11,8 @@ namespace ModelLib
         public double Luftfugtighed { get; set; }
 
 
-        public Logging(int id, DateTime dato, double luftfugtighed)
+        public Logging(DateTime dato, double luftfugtighed)
         {
-            Id = id;
             Dato = dato;
             Luftfugtighed = luftfugtighed;
         }
