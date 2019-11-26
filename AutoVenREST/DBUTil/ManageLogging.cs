@@ -9,17 +9,17 @@ namespace AutoVenREST.DBUTil
 {
     public class ManageLogging : ILogging
     {
-        private const string ConnectionString = null;
+        private const string ConnectionString =
+            "Data Source=simonshndbserver.database.windows.net;Initial Catalog = SimonSHN; User ID = simo35c9; Password=Grethe7538!;Connect Timeout = 30; Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;";
 
         public void Post(Logging logging)
         {
-            string queryString = "INSERT INTO Logging (Id, Dato, Luftfugtighed) VALUES (@id, @dato, @luft)";
+            string queryString = "INSERT INTO Logging (Dato, Luftfugtighed) VALUES (@dato, @luft)";
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
 
-                command.Parameters.AddWithValue("@id", logging.Id);
                 command.Parameters.AddWithValue("@dato", logging.Dato);
                 command.Parameters.AddWithValue("@luft", logging.Luftfugtighed);
 

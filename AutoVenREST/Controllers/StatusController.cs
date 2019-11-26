@@ -29,7 +29,7 @@ namespace AutoVenREST.Controllers
         public void Put(int id, [FromBody] Status value)
         {
             ManageStatus mngItem = new ManageStatus();
-            mngItem.Update(value, id);
+            mngItem.Update(id, value);
         }
 
 

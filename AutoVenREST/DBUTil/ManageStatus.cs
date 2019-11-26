@@ -9,7 +9,8 @@ namespace AutoVenREST.DBUTil
 {
     public class ManageStatus : IStatus
     {
-        private const string ConnectionString = null;
+        private const string ConnectionString =
+            "Data Source=simonshndbserver.database.windows.net;Initial Catalog = SimonSHN; User ID = simo35c9; Password=Grethe7538!;Connect Timeout = 30; Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;";
 
         public List<Status> Get()
         {
@@ -40,7 +41,7 @@ namespace AutoVenREST.DBUTil
             return StatusList;
         }
 
-        public bool Update(Status status,int id)
+        public void Update(int id, Status status)
         {
             string queryString = "UPDATE Status SET Id=@id,Dato=@dato, Active=@active WHERE Id=@id";
             using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -57,10 +58,9 @@ namespace AutoVenREST.DBUTil
                 }
                 catch (SqlException)
                 {
-                    return false;
+                    throw new Exception("Fejl");
                 }
             }
-            return true;
         }
     }
 }
