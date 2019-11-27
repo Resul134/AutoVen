@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoVenREST.DBUTil;
@@ -45,11 +46,17 @@ namespace AutoVenREST.Controllers
                 
                 if (now - entry.Dato > TimeSpan.FromDays(1825))
                 {
-                    logging.Delete(entry.Id);
+                    try
+                    {
+                        logging.Delete(entry.Id);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine("Could'nt remove entry");
+                    }
+                    
                 }
-                Console.WriteLine(new ArgumentException("Couldn't remove"));
                 
-
             }
 
             logging.Post(value);

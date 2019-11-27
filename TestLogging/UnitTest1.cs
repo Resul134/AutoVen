@@ -2,6 +2,7 @@ using AutoVenREST.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ModelLib;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,6 +24,7 @@ namespace UnitTest
         }
 
         [TestMethod]
+        [Priority(0)]
         public void PostandDeleteTest()
         {
 
@@ -46,7 +48,25 @@ namespace UnitTest
         [TestMethod]
         public void TestExpiredEntry()
         {
-            
+            IEnumerable<Logging> list = con.Get();
+            int lengthInit = list.Count();
+
+            DateTime date = DateTime.Now - TimeSpan.FromDays(1830);
+            Logging log = new Logging(date, 50);
+            con.Post(log);
+
+            IEnumerable<Logging> listActual = con.Get();
+            int lengthAct = listActual.Count();
+
+            Assert.AreNotSame(lengthInit, lengthAct);
+
+            con.Post(log);
+            int newLength = listActual.Count();
+
+            Assert.AreEqual(lengthAct, newLength);
+
+            listActual = con.Get();
+            con.Delete(listActual.Last().Id);
         }
     }
 }
