@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
@@ -13,6 +14,8 @@ namespace AutoVenProxyServer
         public int port = 11001;
         public async void Start()
         {
+            string outside = "";
+
             UdpClient client = new UdpClient(port);
             Console.WriteLine("UDP Receiver startet på port " + port);
             IPEndPoint remote = new IPEndPoint(IPAddress.Any, 0);
@@ -23,17 +26,52 @@ namespace AutoVenProxyServer
                     byte[] bytes = client.Receive(ref remote);
                     string s = Encoding.UTF8.GetString(bytes);
 
-                    Logging log = new Logging();
-                    log.Luftfugtighed = Convert.ToDouble(s);
-                    log.Dato = DateTime.Now;
+                    if (s.StartsWith("o"))
+                    {
+                        outside = s.Substring(1);
+                        Console.WriteLine("Det outside: " + outside);
+                        
+                    }
+                    else
+                    {
+                        if (Convert.ToDouble(s, CultureInfo.InvariantCulture) >= Convert.ToDouble(outside, CultureInfo.InvariantCulture))
+                        {
+                            Logging log = new Logging();
+                            log.Luftfugtighed = Convert.ToDouble(s, CultureInfo.InvariantCulture);
+                            log.Dato = DateTime.Now;
 
-                    string msg = JsonConvert.SerializeObject(log);
+                            string msg = JsonConvert.SerializeObject(log);
 
-                    StringContent content = new StringContent(msg, Encoding.UTF8, "application/json");
+                            StringContent content = new StringContent(msg, Encoding.UTF8, "application/json");
 
-                    await c.PostAsync("http://localhost:50850/api/Logging", content);
+                            await c.PostAsync("http://localhost:50850/api/Logging", content);
 
-                    Console.WriteLine(s);
+                            Console.WriteLine(s);
+
+                            Status status = new Status();
+                            status.Id = 1;
+                            status.Dato = DateTime.Now;
+                            status.Active = true;
+                            string msg2 = JsonConvert.SerializeObject(status);
+
+                            StringContent content2 = new StringContent(msg2, Encoding.UTF8, "application/json");
+
+                            await c.PutAsync("http://localhost:50850/api/Status/1", content2);
+                        }
+                        else
+                        {
+                            Status status = new Status();
+                            status.Id = 1;
+                            status.Dato = DateTime.Now;
+                            status.Active = false;
+                            string msg = JsonConvert.SerializeObject(status);
+
+                            StringContent content = new StringContent(msg, Encoding.UTF8, "application/json");
+
+                            await c.PutAsync("http://localhost:50850/api/Status/1", content);
+                        }
+
+                    }
                 }
             }
         }
