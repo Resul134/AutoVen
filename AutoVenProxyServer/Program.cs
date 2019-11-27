@@ -8,6 +8,8 @@ namespace AutoVenProxyServer
         {
             UDPWorker worker = new UDPWorker();
             worker.Start();
+
+            Console.ReadLine();
         }
     }
 }
