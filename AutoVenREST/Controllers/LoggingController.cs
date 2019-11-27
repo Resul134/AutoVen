@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,7 +35,23 @@ namespace AutoVenREST.Controllers
         // POST: api/Logging
         [HttpPost]
         public void Post([FromBody] Logging value)
-        { 
+        {
+            IEnumerable<Logging> list = logging.Get();
+
+            DateTime now = DateTime.Now;
+
+            foreach (var entry in list)
+            {
+                
+                if (now - entry.Dato > TimeSpan.FromDays(1825))
+                {
+                    logging.Delete(entry.Id);
+                }
+                Console.WriteLine(new ArgumentException("Couldn't remove"));
+                
+
+            }
+
             logging.Post(value);
         }
 

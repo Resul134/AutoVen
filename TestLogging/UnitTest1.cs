@@ -42,5 +42,11 @@ namespace UnitTest
             //Delete
             Assert.AreEqual(d, con.Get().Count());
         }
+
+        [TestMethod]
+        public void TestExpiredEntry()
+        {
+            
+        }
     }
 }
