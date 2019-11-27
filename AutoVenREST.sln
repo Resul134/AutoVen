@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelLib", "ModelLib\ModelL
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "TestLogging\UnitTest.csproj", "{D090DF9D-A547-49F0-A462-85E2A8C8DE21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoVenProxyServer", "AutoVenProxyServer\AutoVenProxyServer.csproj", "{3471743C-9099-46F7-AE51-FD56098E2B8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoVenProxyServer", "AutoVenProxyServer\AutoVenProxyServer.csproj", "{3471743C-9099-46F7-AE51-FD56098E2B8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +25,10 @@ Global
 		{03D66AD6-4461-44A9-AD6C-6CF8029B79FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03D66AD6-4461-44A9-AD6C-6CF8029B79FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03D66AD6-4461-44A9-AD6C-6CF8029B79FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D090DF9D-A547-49F0-A462-85E2A8C8DE21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D090DF9D-A547-49F0-A462-85E2A8C8DE21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D090DF9D-A547-49F0-A462-85E2A8C8DE21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D090DF9D-A547-49F0-A462-85E2A8C8DE21}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3471743C-9099-46F7-AE51-FD56098E2B8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3471743C-9099-46F7-AE51-FD56098E2B8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3471743C-9099-46F7-AE51-FD56098E2B8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
