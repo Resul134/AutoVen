@@ -25,6 +25,7 @@ namespace AutoVenProxyServer
                 {
                     byte[] bytes = client.Receive(ref remote);
                     string s = Encoding.UTF8.GetString(bytes);
+                    
 
                     if (s.StartsWith("o"))
                     {
@@ -34,11 +35,16 @@ namespace AutoVenProxyServer
                     }
                     else
                     {
+                        Logging log = new Logging();
+                        log.Luftfugtighed = Convert.ToDouble(s, CultureInfo.InvariantCulture);
+                        log.Dato = DateTime.Now;
+
+                        
+
                         if (Convert.ToDouble(s, CultureInfo.InvariantCulture) >= Convert.ToDouble(outside, CultureInfo.InvariantCulture))
                         {
-                            Logging log = new Logging();
-                            log.Luftfugtighed = Convert.ToDouble(s, CultureInfo.InvariantCulture);
-                            log.Dato = DateTime.Now;
+                            //Skal checkes om den må ændres
+                            log.Aktiv = true;
 
                             string msg = JsonConvert.SerializeObject(log);
 
@@ -48,27 +54,37 @@ namespace AutoVenProxyServer
 
                             Console.WriteLine(s);
 
-                            Status status = new Status();
-                            status.Id = 1;
-                            status.Dato = DateTime.Now;
-                            status.Active = true;
-                            string msg2 = JsonConvert.SerializeObject(status);
+                            //Status status = new Status();
+                            //status.Id = 1;
+                            //status.Dato = DateTime.Now;
+                            //status.AllowChange = true;
+                            //string msg2 = JsonConvert.SerializeObject(status);
 
-                            StringContent content2 = new StringContent(msg2, Encoding.UTF8, "application/json");
+                            //StringContent content2 = new StringContent(msg2, Encoding.UTF8, "application/json");
 
-                            await c.PutAsync("http://localhost:50850/api/Status/1", content2);
+                            //await c.PutAsync("http://localhost:50850/api/Status/1", content2);
                         }
                         else
                         {
-                            Status status = new Status();
-                            status.Id = 1;
-                            status.Dato = DateTime.Now;
-                            status.Active = false;
-                            string msg = JsonConvert.SerializeObject(status);
+                            //Skal checkes om den må ændres
+                            log.Aktiv = false;
+
+                            string msg = JsonConvert.SerializeObject(log);
 
                             StringContent content = new StringContent(msg, Encoding.UTF8, "application/json");
 
-                            await c.PutAsync("http://localhost:50850/api/Status/1", content);
+                            await c.PostAsync("http://localhost:50850/api/Logging", content);
+
+                            Console.WriteLine(s);
+                            //Status status = new Status();
+                            //status.Id = 1;
+                            //status.Dato = DateTime.Now;
+                            //status.AllowChange = false;
+                            //string msg = JsonConvert.SerializeObject(status);
+
+                            //StringContent content = new StringContent(msg, Encoding.UTF8, "application/json");
+
+                            //await c.PutAsync("http://localhost:50850/api/Status/1", content);
                         }
 
                     }

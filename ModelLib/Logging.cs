@@ -9,12 +9,14 @@ namespace ModelLib
         public int Id { get; set; }
         public DateTime Dato { get; set; }
         public double Luftfugtighed { get; set; }
+        public bool Aktiv { get; set; }
 
 
-        public Logging(DateTime dato, double luftfugtighed)
+        public Logging(DateTime dato, double luftfugtighed, bool aktiv)
         {
             Dato = dato;
             Luftfugtighed = luftfugtighed;
+            Aktiv = aktiv;
         }
 
         public Logging()
@@ -24,7 +26,7 @@ namespace ModelLib
 
         public override string ToString()
         {
-            return $"{nameof(Id)}: {Id}, {nameof(Dato)}: {Dato}, {nameof(Luftfugtighed)}: {Luftfugtighed}";
+            return $"{nameof(Id)}: {Id}, {nameof(Dato)}: {Dato}, {nameof(Luftfugtighed)}: {Luftfugtighed}, {nameof(Aktiv)}: {Aktiv}";
         }
     }
 }

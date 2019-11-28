@@ -29,7 +29,7 @@ namespace AutoVenREST.DBUTil
                         Status stat = new Status();
                         stat.Id = reader.GetInt32(0);
                         stat.Dato = reader.GetDateTime(1);
-                        stat.Active = reader.GetBoolean(2);
+                        stat.AllowChange = reader.GetBoolean(2);
                         StatusList.Add(stat);
                     }
                 }
@@ -43,7 +43,7 @@ namespace AutoVenREST.DBUTil
 
         public void Update(int id, Status status)
         {
-            string queryString = "UPDATE Status SET Id=@id,Dato=@dato, Active=@active WHERE Id=@id";
+            string queryString = "UPDATE Status SET Id=@id,Dato=@dato, Active=@allow WHERE Id=@id";
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 try
@@ -51,7 +51,7 @@ namespace AutoVenREST.DBUTil
                     SqlCommand command = new SqlCommand(queryString, connection);
                     command.Parameters.AddWithValue("@id", status.Id);
                     command.Parameters.AddWithValue("@dato", status.Dato);
-                    command.Parameters.AddWithValue("@active", status.Active);
+                    command.Parameters.AddWithValue("@allow", status.AllowChange);
                     command.Connection.Open();
                     command.ExecuteNonQuery();
                     command.Connection.Close();

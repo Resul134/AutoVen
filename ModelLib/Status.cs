@@ -8,13 +8,13 @@ namespace ModelLib
     {
         public int Id { get; set; }
         public DateTime Dato { get; set; }
-        public bool Active { get; set; }
+        public bool AllowChange { get; set; }
 
-        public Status(int id, DateTime dato, bool active)
+        public Status(int id, DateTime dato, bool allowChange)
         {
             Id = id;
             Dato = dato;
-            Active = active;
+            AllowChange = allowChange;
         }
 
 
@@ -24,7 +24,7 @@ namespace ModelLib
 
         public override string ToString()
         {
-            return $"{nameof(Id)}: {Id}, {nameof(Dato)}: {Dato}, {nameof(Active)}: {Active}";
+            return $"{nameof(Id)}: {Id}, {nameof(Dato)}: {Dato}, {nameof(AllowChange)}: {AllowChange}";
         }
     }
 }
