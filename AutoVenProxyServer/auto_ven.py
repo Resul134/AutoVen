@@ -15,7 +15,7 @@ s.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
 
 while True:
  hum = str(sense.get_humidity())
- sense.set_pixels(double_digits.get_digit_array(int(hum), (255,0,0)))
+ sense.set_pixels(double_digits.get_digit_array(int(sense.get_humidity()), (255,0,0)))
 
  now = datetime.now().time().minute
  if now % 15 == 0:
