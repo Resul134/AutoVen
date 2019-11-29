@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
@@ -35,15 +37,22 @@ namespace AutoVenProxyServer
                     }
                     else
                     {
+                        //Get latest active status
+                        List<Logging> loggingActive = new List<Logging>();
+                        string loggingActiveStr = c.GetStringAsync("http://localhost:50850/api/Logging").Result;
+                        loggingActive = JsonConvert.DeserializeObject<List<Logging>>(loggingActiveStr);
+                        bool loggingActiveBool = loggingActive.Last().Aktiv;
+
+                        //New logging
                         Logging log = new Logging();
                         log.Luftfugtighed = Convert.ToDouble(s, CultureInfo.InvariantCulture);
                         log.Dato = DateTime.Now;
+                        log.Aktiv = loggingActiveBool; //Latest aktiv status
 
                         //Get current status in case of manual overwrite
                         Status status = new Status();
                         string allowChange = c.GetStringAsync("http://localhost:50850/api/Status").Result;
                         status = JsonConvert.DeserializeObject<Status>(allowChange);
-                        
 
                         if (Convert.ToDouble(s, CultureInfo.InvariantCulture) >= Convert.ToDouble(outside, CultureInfo.InvariantCulture))
                         {
