@@ -17,7 +17,7 @@ namespace AutoVenREST.Controllers
         private ManageStatus Status = new ManageStatus();
         // GET: api/Status
         [HttpGet]
-        public IEnumerable<Status> Get()
+        public Status Get()
         {
             return Status.Get();
         }

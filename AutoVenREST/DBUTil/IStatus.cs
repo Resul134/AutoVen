@@ -8,7 +8,7 @@ namespace AutoVenREST.DBUTil
 {
     interface IStatus
     {
-        List<Status> Get();
+        Status Get();
 
         void Update(int id, Status status);
     }

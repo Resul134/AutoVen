@@ -12,10 +12,10 @@ namespace AutoVenREST.DBUTil
         private const string ConnectionString =
             "Data Source=simonshndbserver.database.windows.net;Initial Catalog = SimonSHN; User ID = simo35c9; Password=Grethe7538!;Connect Timeout = 30; Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;";
 
-        public List<Status> Get()
+        public Status Get()
         {
-            List<Status> StatusList = new List<Status>();
-            string queryString = "SELECT * FROM Status";
+            Status status = new Status();
+            string queryString = "SELECT * FROM Status WHERE Id = 1";
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
@@ -26,11 +26,9 @@ namespace AutoVenREST.DBUTil
                 {
                     while (reader.Read())
                     {
-                        Status stat = new Status();
-                        stat.Id = reader.GetInt32(0);
-                        stat.Dato = reader.GetDateTime(1);
-                        stat.AllowChange = reader.GetBoolean(2);
-                        StatusList.Add(stat);
+                        status.Id = reader.GetInt32(0);
+                        status.Dato = reader.GetDateTime(1);
+                        status.AllowChange = reader.GetBoolean(2);
                     }
                 }
                 finally
@@ -38,7 +36,7 @@ namespace AutoVenREST.DBUTil
                     reader.Close();
                 }
             }
-            return StatusList;
+            return status;
         }
 
         public void Update(int id, Status status)

@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 using ModelLib;
 using Newtonsoft.Json;
 
@@ -31,7 +32,6 @@ namespace AutoVenProxyServer
                     {
                         outside = s.Substring(1);
                         Console.WriteLine("Det outside: " + outside);
-                        
                     }
                     else
                     {
@@ -39,53 +39,25 @@ namespace AutoVenProxyServer
                         log.Luftfugtighed = Convert.ToDouble(s, CultureInfo.InvariantCulture);
                         log.Dato = DateTime.Now;
 
+                        //Get current status in case of manual overwrite
+                        Status status = new Status();
+                        string allowChange = c.GetStringAsync("http://localhost:50850/api/Status").Result;
+                        status = JsonConvert.DeserializeObject<Status>(allowChange);
                         
 
                         if (Convert.ToDouble(s, CultureInfo.InvariantCulture) >= Convert.ToDouble(outside, CultureInfo.InvariantCulture))
                         {
-                            //Skal checkes om den må ændres
-                            log.Aktiv = true;
-
-                            string msg = JsonConvert.SerializeObject(log);
-
-                            StringContent content = new StringContent(msg, Encoding.UTF8, "application/json");
-
-                            await c.PostAsync("http://localhost:50850/api/Logging", content);
-
-                            Console.WriteLine(s);
-
-                            //Status status = new Status();
-                            //status.Id = 1;
-                            //status.Dato = DateTime.Now;
-                            //status.AllowChange = true;
-                            //string msg2 = JsonConvert.SerializeObject(status);
-
-                            //StringContent content2 = new StringContent(msg2, Encoding.UTF8, "application/json");
-
-                            //await c.PutAsync("http://localhost:50850/api/Status/1", content2);
+                            if (status.AllowChange) log.Aktiv = true;
                         }
                         else
                         {
-                            //Skal checkes om den må ændres
-                            log.Aktiv = false;
-
-                            string msg = JsonConvert.SerializeObject(log);
-
-                            StringContent content = new StringContent(msg, Encoding.UTF8, "application/json");
-
-                            await c.PostAsync("http://localhost:50850/api/Logging", content);
-
-                            Console.WriteLine(s);
-                            //Status status = new Status();
-                            //status.Id = 1;
-                            //status.Dato = DateTime.Now;
-                            //status.AllowChange = false;
-                            //string msg = JsonConvert.SerializeObject(status);
-
-                            //StringContent content = new StringContent(msg, Encoding.UTF8, "application/json");
-
-                            //await c.PutAsync("http://localhost:50850/api/Status/1", content);
+                            if(status.AllowChange) log.Aktiv = false;
                         }
+                        string msg = JsonConvert.SerializeObject(log);
+
+                        StringContent content = new StringContent(msg, Encoding.UTF8, "application/json");
+
+                        await c.PostAsync("http://localhost:50850/api/Logging", content);
 
                     }
                 }
