@@ -37,6 +37,8 @@ namespace AutoVenProxyServer
                     }
                     else
                     {
+                        Console.WriteLine(s);
+
                         //Get latest active status
                         List<Logging> loggingActive = new List<Logging>();
                         string loggingActiveStr = c.GetStringAsync("http://localhost:50850/api/Logging").Result;
