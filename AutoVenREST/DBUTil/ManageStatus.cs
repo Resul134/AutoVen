@@ -10,7 +10,7 @@ namespace AutoVenREST.DBUTil
     public class ManageStatus : IStatus
     {
         private const string ConnectionString =
-            "Data Source=simonshndbserver.database.windows.net;Initial Catalog = SimonSHN; User ID = simo35c9; Password=Grethe7538!;Connect Timeout = 30; Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;";
+            "Data Source=simonshn.database.windows.net;Initial Catalog=SimonSHN;User ID=simo35c9;Password=Simon1234;Connect Timeout=30;Encrypt=True;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         public Status Get()
         {
