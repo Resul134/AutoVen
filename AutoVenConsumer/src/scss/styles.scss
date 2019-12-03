@@ -1,0 +1,129 @@
+body 
+{
+    background-color: #f4f4f4;
+}
+
+.grey 
+{
+    background-color: #ccc;
+}
+.input input
+{
+    background-color: #e0e0e0;
+    border: none;
+    margin-bottom: 10px;
+}
+.input button
+{
+    float: right;
+}
+
+.input input:focus
+{
+    background-color: #ececec;
+
+}
+
+.input 
+{
+    padding: 0 20px;
+    max-width: 500px;
+}
+.content 
+{
+    margin-top: 50px;
+}
+
+.center
+{
+    display: block;
+    margin: 0 auto;
+}
+
+.center button 
+{
+    width: 100px;
+}
+
+.textcenter
+{
+    text-align: center;
+}
+
+.navigate
+{
+    background-color: #e0e0e0;
+    padding: 10px;
+}
+
+.navigate button 
+{
+    display: block;
+    float: right;
+}
+
+.input img 
+{
+    margin-top: 20vh;
+    margin-bottom: 5vh;
+}
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+    from {
+      -webkit-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(360deg);
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes rotating {
+    from {
+      -ms-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -webkit-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    to {
+      -ms-transform: rotate(360deg);
+      -moz-transform: rotate(360deg);
+      -webkit-transform: rotate(360deg);
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  .rotating {
+    -webkit-animation: rotating 2s linear infinite;
+    -moz-animation: rotating 2s linear infinite;
+    -ms-animation: rotating 2s linear infinite;
+    -o-animation: rotating 2s linear infinite;
+    animation: rotating 2s linear infinite;
+  }
+
+  .title 
+  {
+      text-align: center;
+      margin-top: 20px;
+      color: #555;
+  }
+
+  img 
+  {
+    max-width: 100%;
+  }
+
+  .on
+  {
+      font-weight: bold;
+      color: #76d651;
+  }
+
+  .off
+  {
+      font-weight: bold;
+      color: #ea4646;
+  }

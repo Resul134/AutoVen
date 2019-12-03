@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>AutoVen</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="bundle.css">
+</head>
+
+<body>
+    <div class="navigate">
+        <button class="btn">Log ud</button>
+        <div style="clear: both;"></div>
+    </div>
+
+    <div class="container">
+        <h3 class="title">Velkommen til dit ventilationssystem, Palle</h3>
+        <div class="row content">
+            <div class="col-sm-4">
+                <p class="textcenter">Dit ventilationssystem er <span class="on" id="status">Tændt</span> </p>
+                <img class="rotating" src="https://i.imgur.com/EnWyv7g.png">
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-7">
+                <!--Grafer her-->
+            </div>
+        </div>
+        <div class="content">
+            <p class="textcenter">Følgende knapper stopper den automatiske tænd/sluk funktion og holder <br>
+                systemet tændt/slukket alt efter hvad du vælger, indtil ændrer det igen.</p>
+            <div class="center" style="width:225px;">
+                <button style="margin-right: 20px;" class="btn grey">Tænd</button>
+                <button class="btn grey">Sluk</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="bundle.js"></script>
+</body>
+
+</html>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.852
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoVenREST", "AutoVenREST\AutoVenREST.csproj", "{C03925A3-8DB9-457D-AB89-CBA75A385798}"
 EndProject
@@ -10,6 +10,27 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "TestLogging\UnitTest.csproj", "{D090DF9D-A547-49F0-A462-85E2A8C8DE21}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoVenProxyServer", "AutoVenProxyServer\AutoVenProxyServer.csproj", "{3471743C-9099-46F7-AE51-FD56098E2B8F}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "AutoVenConsumer", "..\..\..\Desktop\AutoVenConsumer\", "{B16F0102-30AF-4D9A-9C17-22128DD3D9A6}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_53637"
+		Debug.AspNetCompiler.PhysicalPath = "..\..\..\Desktop\AutoVenConsumer\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_53637\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_53637"
+		Release.AspNetCompiler.PhysicalPath = "..\..\..\Desktop\AutoVenConsumer\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_53637\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "53637"
+		SlnRelativePath = "..\..\..\Desktop\AutoVenConsumer\"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +54,10 @@ Global
 		{3471743C-9099-46F7-AE51-FD56098E2B8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3471743C-9099-46F7-AE51-FD56098E2B8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3471743C-9099-46F7-AE51-FD56098E2B8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B16F0102-30AF-4D9A-9C17-22128DD3D9A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B16F0102-30AF-4D9A-9C17-22128DD3D9A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B16F0102-30AF-4D9A-9C17-22128DD3D9A6}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{B16F0102-30AF-4D9A-9C17-22128DD3D9A6}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
