@@ -5,6 +5,15 @@ import axios, {
 
 var MyStorage = window.localStorage;
 
+
+//Humidtiy
+let humidOutput : HTMLDivElement = <HTMLDivElement>document.getElementById("humidOutput")
+
+
+let urlHumid: string = "http://api.openweathermap.org/data/2.5/weather?q=Roskilde,DK&APPID=f0f18be3bdaa24b17b922c92f5cd9279"
+
+//Login
+
 let loginBut : HTMLButtonElement = <HTMLButtonElement>document.getElementById("buttonLogin");
 if(loginBut != null)
 {
@@ -20,6 +29,27 @@ if(logUDBut != null)
 let bruger : HTMLInputElement = <HTMLInputElement>document.getElementById("email");
 let kodeord : HTMLInputElement = <HTMLInputElement>document.getElementById("kodeord");
 let logOutput : HTMLDivElement = <HTMLDivElement>document.getElementById("loginValidation");
+
+
+
+function getHumid(): void{
+    axios.get(urlHumid)
+    .then((main: AxiosResponse) => {
+        let data = main.data["main"]["humidity"];
+        let longHtml: string = "<p>";
+      
+        console.log(data)
+
+        longHtml +=  "Fugtighed udenfor: " + data + "%"; 
+        
+        longHtml += "</p>";
+        humidOutput.innerHTML = longHtml;
+    })
+    .catch((error: AxiosError) => {
+        console.log(error);
+        humidOutput.innerHTML = error.message;
+    });
+}
 
 function logudFunc(): void{
 
@@ -94,6 +124,8 @@ function timer(): void{
     },1000)
 }
 
+//Kører kun på main siden, metoder der altid kører på main
 if(window.location.pathname == "/mainsite.htm"){
     timer();
+    getHumid();
 }
