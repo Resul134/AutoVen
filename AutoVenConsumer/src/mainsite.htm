@@ -11,7 +11,7 @@
 
 <body>
     <div class="navigate">
-        <button class="btn">Log ud</button>
+        <button class="btn" id="buttonLogud">Log ud</button>
         <div style="clear: both;"></div>
     </div>
 
@@ -37,8 +37,21 @@
 
         </div>
     </div>
-
+    
     <script src="bundle.js"></script>
+    <script>
+        if(localStorage.getItem('logged') == null)
+        {
+            location.href = "index.htm"
+            
+       }
+        if(localStorage.getItem('logged') != 'true')
+        {
+            location.href = "index.htm"
+        }
+       
+        
+    </script>
 </body>
 
 </html>
