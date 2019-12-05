@@ -159,7 +159,8 @@ function timer(): void{
         if(t == 1 || t == 16 || t == 31 || t == 46){
             if(b){
                 //Kode til at tjekke status og stoppe/starte blæserbladet her
-                
+                getLatestLog();
+                getHumid();
 
                 console.log(t);
                 b = false;
@@ -168,12 +169,11 @@ function timer(): void{
             if(!b) b = true;
         }
     },1000)
-    getLatestLog();
 }
 
 //Kører kun på main siden, metoder der altid kører på main
 if(window.location.pathname == "/mainsite.htm"){
     timer();
     getHumid();
-    
+    getLatestLog();
 }
