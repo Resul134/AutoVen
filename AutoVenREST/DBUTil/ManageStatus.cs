@@ -41,7 +41,7 @@ namespace AutoVenREST.DBUTil
 
         public void Update(int id, Status status)
         {
-            string queryString = "UPDATE Status SET Id=@id,Dato=@dato, Active=@allow WHERE Id=@id";
+            string queryString = "UPDATE Status SET Id=@id,Dato=@dato,allowChange=@allow WHERE Id=@id";
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
                 try
