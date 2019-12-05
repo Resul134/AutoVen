@@ -124,5 +124,44 @@ namespace AutoVenREST.DBUTil
 
             return logging;
         }
+
+
+        public Logging getLatestEntry()
+        {
+            Logging logs = new Logging();
+
+            string queryLatest = "SELECT TOP 1 * FROM Logging ORDER BY Id DESC";
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                SqlCommand command = new SqlCommand(queryLatest, connection);
+
+                connection.Open();
+
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                try
+                {
+                    while (reader.Read())
+                    {
+
+                        logs.Id = reader.GetInt32(0);
+                        logs.Dato = reader.GetDateTime(1);
+                        logs.Luftfugtighed = reader.GetDouble(2);
+                        logs.Aktiv = reader.GetBoolean(3);
+
+
+                    }
+                }
+                finally
+                {
+                    reader.Close();
+                }
+                connection.Close();
+            }
+
+            return logs;
+        }
     }
 }

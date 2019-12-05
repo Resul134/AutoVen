@@ -68,5 +68,14 @@ namespace AutoVenREST.Controllers
         {
             logging.Delete(id);
         }
+
+
+
+        [HttpGet]
+        [Route("getLast")]
+        public Logging getLatest()
+        {
+            return logging.getLatestEntry();
+        }
     }
 }
