@@ -41,7 +41,8 @@ let bruger : HTMLInputElement = <HTMLInputElement>document.getElementById("email
 let kodeord : HTMLInputElement = <HTMLInputElement>document.getElementById("kodeord");
 let logOutput : HTMLDivElement = <HTMLDivElement>document.getElementById("loginValidation");
 
-
+let aktivitet : HTMLSpanElement = <HTMLSpanElement>document.getElementById("status")
+let fanblade : HTMLImageElement = <HTMLImageElement>document.getElementById("fan");
 
 function getHumid(): void{
     axios.get(urlHumid)
@@ -70,12 +71,23 @@ function getLatestLog() : void {
         let dataOne : Logging = response.data;
         let longHtml2: string = "<p>";
     
+        if (dataOne.aktiv) {
+            aktivitet.className = "on";
+            aktivitet.innerHTML = "Tændt"
+            fanblade.className = "rotating center";
+        }
+        else {
+            aktivitet.className = "off";
+            aktivitet.innerHTML = "Slukket"
+            fanblade.className = "center";
+        }
+
         console.log(dataOne);
         humidInside.innerHTML = JSON.stringify(dataOne);
 
         console.log(dataOne.id, dataOne.dato, dataOne.aktiv, dataOne.luftfugtighed);
         
-        longHtml2 += "Fugtighed indenfor: " + dataOne.luftfugtighed.toPrecision(2) + "%";
+        longHtml2 += "Fugtighed indenfor: " + dataOne.luftfugtighed.toPrecision(3) + "%";
                
           
         longHtml2 += "</p>";
@@ -156,11 +168,12 @@ function timer(): void{
             if(!b) b = true;
         }
     },1000)
+    getLatestLog();
 }
 
 //Kører kun på main siden, metoder der altid kører på main
 if(window.location.pathname == "/mainsite.htm"){
     timer();
     getHumid();
-    getLatestLog();
+    
 }
