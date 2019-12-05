@@ -12,8 +12,18 @@ interface Logging {
     aktiv: boolean;
 }
 
+interface Status {
+    id: number;
+    dato: Date;
+    allowChange : boolean;
+}
+
 //henter den nyeste entry fra databasen
 let urlgetLast : string = "https://autovenrest.azurewebsites.net/api/Logging/getLast";
+
+let urlLogPost : string = "https://autovenrest.azurewebsites.net/api/Logging/";
+
+let statusURI : string = "https://autovenrest.azurewebsites.net/api/Status/1/";
 
 let humidInside : HTMLDivElement = <HTMLDivElement>document.getElementById("humidInside")
 
@@ -43,6 +53,86 @@ let logOutput : HTMLDivElement = <HTMLDivElement>document.getElementById("loginV
 
 let aktivitet : HTMLSpanElement = <HTMLSpanElement>document.getElementById("status")
 let fanblade : HTMLImageElement = <HTMLImageElement>document.getElementById("fan");
+
+let turnOnButton : HTMLButtonElement = <HTMLButtonElement>document.getElementById("onButton");
+let turnOffButton : HTMLButtonElement = <HTMLButtonElement>document.getElementById("offButton");
+let automatiskButton : HTMLButtonElement = <HTMLButtonElement>document.getElementById("autoButton");
+
+if (automatiskButton !=null)
+{
+    automatiskButton.addEventListener("click", auto)
+}
+
+if (turnOnButton != null)
+{
+    turnOnButton.addEventListener("click", turnOn)
+}
+
+if (turnOffButton != null)
+{
+    turnOffButton.addEventListener("click", turnOff)
+}
+
+function auto() {
+    axios.put<Status>(statusURI, {id: 1, dato: getDate(), allowChange: true})
+    .then((response: AxiosResponse)=> { 
+      getLatestLog()
+    })   
+}
+
+function getDate() : Date {
+
+    let thisDate : Date = new Date();
+    let options = {day : "2-digit"}
+    let dateString : string = thisDate.getFullYear() + "-" + thisDate.getMonth() + "-" + thisDate.toLocaleDateString("en-US",options);
+    let dateTHis : Date = new Date(dateString);
+
+    return dateTHis;
+}
+
+function getLastestFugt() {
+let logTal : number;
+
+    axios.get<Logging>(urlgetLast)
+        .then((response: AxiosResponse<Logging>) =>{
+        let dataOne : Logging = response.data;
+
+        logTal = dataOne.luftfugtighed;
+        alert(logTal)
+        return logTal;
+        })
+
+        
+}
+
+
+function turnOn(){
+    
+
+    axios.put<Status>(statusURI, {id: 1, dato: getDate(), allowChange: false})
+    .then((response: AxiosResponse)=> { 
+       postLog(true);
+       getLatestLog();
+    })
+    }
+
+    function postLog(status : boolean){
+
+        axios.post<Logging>(urlLogPost, {dato : getDate(), luftfugtighed : getLastestFugt(), aktiv : status})
+    }
+
+    function turnOff(){
+    
+
+        axios.put<Status>(statusURI, {id: 1, dato: getDate(), allowChange: false})
+        .then((response: AxiosResponse)=> { 
+           postLog(false);
+           getLatestLog();
+        })
+        }
+
+
+
 
 function getHumid(): void{
     axios.get(urlHumid)
