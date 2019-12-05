@@ -5,6 +5,17 @@ import axios, {
 
 var MyStorage = window.localStorage;
 
+interface Logging {
+    id: number;
+    dato: string;
+    luftfugtighed: number;
+    aktiv: boolean;
+}
+
+
+let url : string = "https://autovenrest.azurewebsites.net/api/Logging";
+
+let humidInside : HTMLDivElement = <HTMLDivElement>document.getElementById("humidInside")
 
 //Humidtiy
 let humidOutput : HTMLDivElement = <HTMLDivElement>document.getElementById("humidOutput")
@@ -50,6 +61,30 @@ function getHumid(): void{
         humidOutput.innerHTML = error.message;
     });
 }
+
+function getLatestLog() : void {
+   
+    let queryLatest : string = "SELECT * FROM Table ORDER BY ID DESC";
+
+    axios.get<Logging>(url)
+        .then((response: AxiosResponse<Logging>) =>{
+        let dataOne : Logging = response.data;
+        let longHtml2: string = "<p>";
+    
+        console.log(dataOne);
+        humidInside.innerHTML = JSON.stringify(dataOne);
+
+        console.log(dataOne.id, dataOne.dato, dataOne.aktiv, dataOne.luftfugtighed);
+        
+        longHtml2 += "<li>"+ dataOne.luftfugtighed +"</li>";
+               
+          
+        longHtml2 += "</p>";
+        humidInside.innerHTML = longHtml2; 
+    });
+         
+       
+   }
 
 function logudFunc(): void{
 
@@ -128,4 +163,5 @@ function timer(): void{
 if(window.location.pathname == "/mainsite.htm"){
     timer();
     getHumid();
+    getLatestLog();
 }
