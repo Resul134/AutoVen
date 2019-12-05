@@ -90,49 +90,29 @@ function getDate() : Date {
     return dateTHis;
 }
 
-function getLastestFugt() {
-let logTal : number;
-
+function postLog(status : boolean){
     axios.get<Logging>(urlgetLast)
-        .then((response: AxiosResponse<Logging>) =>{
+    .then((response: AxiosResponse<Logging>) =>{
         let dataOne : Logging = response.data;
-
-        logTal = dataOne.luftfugtighed;
-        alert(logTal)
-        return logTal;
+        axios.post<Logging>(urlLogPost, {dato : getDate(), luftfugtighed : dataOne.luftfugtighed, aktiv : status}).then(()=>{
+            getLatestLog();
         })
-
-        
+    }) 
 }
 
-
 function turnOn(){
-    
-
-    axios.put<Status>(statusURI, {id: 1, dato: getDate(), allowChange: false})
+ axios.put<Status>(statusURI, {id: 1, dato: getDate(), allowChange: false})
     .then((response: AxiosResponse)=> { 
        postLog(true);
-       getLatestLog();
-    })
-    }
+})
+}
 
-    function postLog(status : boolean){
-
-        axios.post<Logging>(urlLogPost, {dato : getDate(), luftfugtighed : getLastestFugt(), aktiv : status})
-    }
-
-    function turnOff(){
-    
-
-        axios.put<Status>(statusURI, {id: 1, dato: getDate(), allowChange: false})
+function turnOff(){
+    axios.put<Status>(statusURI, {id: 1, dato: getDate(), allowChange: false})
         .then((response: AxiosResponse)=> { 
            postLog(false);
-           getLatestLog();
-        })
-        }
-
-
-
+    })
+    }
 
 function getHumid(): void{
     axios.get(urlHumid)
@@ -154,8 +134,6 @@ function getHumid(): void{
 }
 
 function getLatestLog() : void {
-   
-
     axios.get<Logging>(urlgetLast)
         .then((response: AxiosResponse<Logging>) =>{
         let dataOne : Logging = response.data;
