@@ -12,8 +12,8 @@ interface Logging {
     aktiv: boolean;
 }
 
-
-let url : string = "https://autovenrest.azurewebsites.net/api/Logging";
+//henter den nyeste entry fra databasen
+let urlgetLast : string = "https://autovenrest.azurewebsites.net/api/Logging/getLast";
 
 let humidInside : HTMLDivElement = <HTMLDivElement>document.getElementById("humidInside")
 
@@ -64,9 +64,8 @@ function getHumid(): void{
 
 function getLatestLog() : void {
    
-    let queryLatest : string = "SELECT * FROM Table ORDER BY ID DESC";
 
-    axios.get<Logging>(url)
+    axios.get<Logging>(urlgetLast)
         .then((response: AxiosResponse<Logging>) =>{
         let dataOne : Logging = response.data;
         let longHtml2: string = "<p>";
@@ -76,7 +75,7 @@ function getLatestLog() : void {
 
         console.log(dataOne.id, dataOne.dato, dataOne.aktiv, dataOne.luftfugtighed);
         
-        longHtml2 += "<li>"+ dataOne.luftfugtighed +"</li>";
+        longHtml2 += "Fugtighed indenfor: " + dataOne.luftfugtighed.toPrecision(2) + "%";
                
           
         longHtml2 += "</p>";
