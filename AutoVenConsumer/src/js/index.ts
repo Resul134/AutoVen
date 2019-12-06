@@ -10,7 +10,7 @@ var MyStorage = window.localStorage;
 
 interface Logging {
     id: number;
-    dato: string;
+    dato: Date;
     luftfugtighed: number;
     aktiv: boolean;
 }
@@ -76,21 +76,13 @@ if (turnOffButton != null) {
     turnOffButton.addEventListener("click", turnOff)
 }
 
-function auto() {
-    axios.put<Status>(statusURI, { id: 1, dato: getDate(), allowChange: true })
-        .then((response: AxiosResponse) => {
-            getLatestLog()
-        })
-}
-
-function getDate(): Date {
+function getDate(): String {
 
     let thisDate: Date = new Date();
     let options = { day: "2-digit" }
-    let dateString: string = thisDate.getFullYear() + "-" + thisDate.getMonth() + 1 + "-" + thisDate.toLocaleDateString("en-US", options);
-    let dateTHis: Date = new Date(dateString);
+    let dateString: string = thisDate.getFullYear() + "-" + (thisDate.getMonth() + 1) + "-" + thisDate.toLocaleDateString("en-US", options) + "T" + thisDate.getHours() + ":" + thisDate.getMinutes() + ":" + thisDate.getSeconds();
 
-    return dateTHis;
+    return dateString;
 }
 
 function postLog(status: boolean) {
@@ -117,13 +109,18 @@ function turnOff() {
         })
 }
 
+function auto() {
+    axios.put<Status>(statusURI, { id: 1, dato: getDate(), allowChange: true })
+        .then((response: AxiosResponse) => {
+            getLatestLog()
+        })
+}
+
 function getHumid(): void {
     axios.get(urlHumid)
         .then((main: AxiosResponse) => {
             let data = main.data["main"]["humidity"];
             let longHtml: string = "<p>";
-
-            console.log(data)
 
             longHtml += "Fugtighed udenfor: " + data + "%";
 
@@ -136,32 +133,11 @@ function getHumid(): void {
         });
 }
 
-function getAllLogs() {
-    let getData = Array<chartTemplate>();
-    axios.get<Array<Logging>>(urlLogPost)
-        .then((response: AxiosResponse<Array<Logging>>) => {
-            response.data.forEach(element => {
-
-                let tempDate = new Date(element.dato);
-                getData.push({
-                    date: tempDate,
-                    luftfugtighed: element.luftfugtighed
-                });
-            });
-        });
-    return getData;
-}
-
 
 function getLatestLog(): void {
     axios.get<Logging>(urlgetLast)
         .then((response: AxiosResponse<Logging>) => {
             let dataOne: Logging = response.data;
-
-            luftfugtighed = dataOne.luftfugtighed;
-
-            date = new Date(dataOne.dato);
-            data.push({ date: date, luftfugtighed: luftfugtighed });
 
             let longHtml2: string = "<p>";
 
@@ -175,11 +151,7 @@ function getLatestLog(): void {
                 aktivitet.innerHTML = "Slukket"
                 fanblade.className = "center";
             }
-
-            console.log(dataOne);
             humidInside.innerHTML = JSON.stringify(dataOne);
-
-            console.log(dataOne.id, dataOne.dato, dataOne.aktiv, dataOne.luftfugtighed);
 
             longHtml2 += "Fugtighed indenfor: " + dataOne.luftfugtighed.toPrecision(3) + "%";
 
@@ -265,67 +237,49 @@ if (window.location.pathname == "/mainsite.htm") {
     timer();
     getHumid();
     getLatestLog();
+
+    let chart = am4core.create("chartdiv", am4charts.XYChart);
+    chart.paddingRight = 20;
+
+    let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+    dateAxis.baseInterval = {
+        "timeUnit": "minute",
+        "count": 1
+    };
+    dateAxis.tooltipDateFormat = "HH:mm, d MMMM";
+
+    let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    valueAxis.tooltip.disabled = true;
+    valueAxis.title.text = "Luftfugtighed";
+
+    let series = chart.series.push(new am4charts.LineSeries());
+    series.dataFields.dateX = "dato";
+    series.dataFields.valueY = "luftfugtighed";
+    series.tooltipText = "Luftfugtighed: [bold]{valueY}[/]";
+    series.fillOpacity = 0.3;
+
+    chart.cursor = new am4charts.XYCursor();
+    chart.cursor.lineY.opacity = 0;
+    dateAxis.start = 0;
+    dateAxis.keepSelection = true;
+
+
+
     getAllLogs();
 }
+function getAllLogs() {
+    let getData = [];
+    axios.get<[Logging]>(urlLogPost)
+        .then((response: AxiosResponse<[Logging]>) => {
+            response.data.forEach(element => {
+                delete element["aktiv"]
+                delete element["id"];
+                let tempDate = new Date(element.dato.toString());
+                element.dato = tempDate
+            })
 
-let data = [];
-let luftfugtighed: number;
-let date: Date;
-
-let chart = am4core.create("chartdiv", am4charts.XYChart);
-chart.paddingRight = 20;
-
-
-//data = generateChartData();
-var test = getAllLogs();
-chart.data = test;
-console.log(chart.data);
-
-let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-dateAxis.baseInterval = {
-    "timeUnit": "minute",
-    "count": 1
-};
-dateAxis.tooltipDateFormat = "HH:mm, d MMMM";
-
-let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-valueAxis.tooltip.disabled = true;
-valueAxis.title.text = "Luftfugtighed";
-
-let series = chart.series.push(new am4charts.LineSeries());
-series.dataFields.dateX = "date";
-series.dataFields.valueY = "luftfugtighed";
-series.tooltipText = "Luftfugtighed: [bold]{valueY}[/]";
-series.fillOpacity = 0.3;
-
-chart.cursor = new am4charts.XYCursor();
-chart.cursor.lineY.opacity = 0;
-chart.scrollbarX = new am4charts.XYChartScrollbar();
-chart.scrollbarX.series.push(series);
-
-dateAxis.start = 0.8;
-dateAxis.keepSelection = true;
-
-function generateChartData() {
-    let chartData = [];
-    // current date
-    let firstDate = new Date();
-    // now set 500 minutes back
-    firstDate.setMinutes(firstDate.getDate() - 500);
-
-    // and generate 500 data items
-    let luftfugtighed = 500;
-    for (var i = 0; i < 500; i++) {
-        let newDate = new Date();
-        // each time we add one minute
-        newDate.setMinutes(newDate.getMinutes() + i);
-        // some random number
-        luftfugtighed += Math.round((Math.random() < 0.5 ? 1 : -1) * Math.random() * 10);
-        // add data item to the array
-        chartData.push({
-            date: newDate,
-            luftfugtighed: luftfugtighed
+            getData = response.data;
+            chart.data = getData;
+            console.log(getData)
         });
-    }
-    return chartData;
 }
