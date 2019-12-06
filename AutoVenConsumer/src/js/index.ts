@@ -91,6 +91,8 @@ function postLog(status: boolean) {
             let dataOne: Logging = response.data;
             axios.post<Logging>(urlLogPost, { dato: getDate(), luftfugtighed: dataOne.luftfugtighed, aktiv: status }).then(() => {
                 getLatestLog();
+                getAllLogs();
+                getAllActivities();
             })
         })
 }
@@ -222,6 +224,8 @@ function timer(): void {
                 //Kode til at tjekke status og stoppe/starte blæserbladet her
                 getLatestLog();
                 getHumid();
+                getAllActivities();
+                getAllLogs();
 
                 console.log(t);
                 b = false;
@@ -232,13 +236,15 @@ function timer(): void {
     }, 1000)
 }
 
+let chart: any
+let newchart: any
+
 //Kører kun på main siden, metoder der altid kører på main
 if (window.location.pathname == "/mainsite.htm") {
     timer();
     getHumid();
     getLatestLog();
-
-    let chart = am4core.create("chartdiv", am4charts.XYChart);
+    chart = am4core.create("chartdiv", am4charts.XYChart);
     chart.paddingRight = 20;
 
     let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
@@ -263,10 +269,38 @@ if (window.location.pathname == "/mainsite.htm") {
     dateAxis.start = 0;
     dateAxis.keepSelection = true;
 
-    getAllLogs(chart);
+    getAllLogs();
+
+    newchart = am4core.create("newchartdiv", am4charts.XYChart);
+    chart.paddingRight = 20;
+
+    let newdateAxis = newchart.xAxes.push(new am4charts.DateAxis());
+    newdateAxis.baseInterval = {
+        "timeUnit": "minute",
+        "count": 1
+    };
+    newdateAxis.tooltipDateFormat = "HH:mm, d MMMM";
+
+    let newvalueAxis = newchart.yAxes.push(new am4charts.ValueAxis());
+    newvalueAxis.tooltip.disabled = true;
+    newvalueAxis.title.text = "Aktivitet";
+    newvalueAxis.max = 1;
+
+    let newseries = newchart.series.push(new am4charts.LineSeries());
+    newseries.dataFields.dateX = "dato";
+    newseries.dataFields.valueY = "aktiv";
+    newseries.tooltipText = "Aktivitet: [bold]{valueY}[/]";
+    newseries.fillOpacity = 0.3;
+
+    newchart.cursor = new am4charts.XYCursor();
+    newchart.cursor.lineY.opacity = 0;
+    newdateAxis.start = 0;
+    newdateAxis.keepSelection = true;
+
+    getAllActivities();    
 }
 
-function getAllLogs(c: any) {
+function getAllLogs() {
     let getData = [];
     axios.get<[Logging]>(urlLogPost)
         .then((response: AxiosResponse<[Logging]>) => {
@@ -278,7 +312,24 @@ function getAllLogs(c: any) {
             })
 
             getData = response.data;
-            c.data = getData;
+            chart.data = getData;
+            console.log(getData)
+        });
+}
+
+function getAllActivities() {
+    let getData = [];
+    axios.get<[Logging]>(urlLogPost)
+        .then((response: AxiosResponse<[Logging]>) => {
+            response.data.forEach(element => {
+                delete element["luftfugtighed"]
+                delete element["id"];
+                let tempDate = new Date(element.dato.toString());
+                element.dato = tempDate
+            })
+
+            getData = response.data;
+            newchart.data = getData;
             console.log(getData)
         });
 }
