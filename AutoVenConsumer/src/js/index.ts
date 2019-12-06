@@ -263,11 +263,10 @@ if (window.location.pathname == "/mainsite.htm") {
     dateAxis.start = 0;
     dateAxis.keepSelection = true;
 
-
-
-    getAllLogs();
+    getAllLogs(chart);
 }
-function getAllLogs() {
+
+function getAllLogs(c: any) {
     let getData = [];
     axios.get<[Logging]>(urlLogPost)
         .then((response: AxiosResponse<[Logging]>) => {
@@ -279,7 +278,7 @@ function getAllLogs() {
             })
 
             getData = response.data;
-            chart.data = getData;
+            c.data = getData;
             console.log(getData)
         });
 }
