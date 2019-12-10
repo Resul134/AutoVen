@@ -270,6 +270,13 @@ if (window.location.pathname == "/mainsite.htm") {
     series.tooltipText = "Luftfugtighed: [bold]{valueY}[/]";
     series.fillOpacity = 0.3;
 
+    let useries = chart.series.push(new am4charts.LineSeries());
+    useries.dataFields.dateX = "dato";
+    useries.dataFields.valueY = "uLuftfugtighed";
+    useries.tooltipText = "Udendørs Luftfugtighed: [bold]{valueY}[/]";
+    useries.fillOpacity = 0.3;
+    
+
     chart.cursor = new am4charts.XYCursor();
     chart.cursor.lineY.opacity = 0;
     dateAxis.start = 0;
@@ -314,7 +321,6 @@ function getAllLogs() {
             response.data.forEach(element => {
                 delete element["aktiv"]
                 delete element["id"];
-                delete element["uLuftfugtighed"];
                 let tempDate = new Date(element.dato.toString());
                 element.dato = tempDate
             })
