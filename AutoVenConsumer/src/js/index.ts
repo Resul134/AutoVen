@@ -273,13 +273,17 @@ if (window.location.pathname == "/mainsite.htm") {
     series.dataFields.dateX = "dato";
     series.dataFields.valueY = "luftfugtighed";
     series.tooltipText = "Luftfugtighed: [bold]{valueY}[/]";
-    series.fillOpacity = 0.3;
+    series.fillOpacity = 0;
+    series.strokeWidth = 2;
 
     let useries = chart.series.push(new am4charts.LineSeries());
     useries.dataFields.dateX = "dato";
     useries.dataFields.valueY = "uLuftfugtighed";
     useries.tooltipText = "Udendørs Luftfugtighed: [bold]{valueY}[/]";
-    useries.fillOpacity = 0.3;
+    useries.fillOpacity = 0;
+    useries.stroke = am4core.color("#ff0000");
+    useries.fill = am4core.color("#ff0000");
+    useries.strokeWidth = 2;
     
 
     chart.cursor = new am4charts.XYCursor();
@@ -309,7 +313,8 @@ if (window.location.pathname == "/mainsite.htm") {
     newseries.dataFields.dateX = "dato";
     newseries.dataFields.valueY = "aktiv";
     newseries.tooltipText = "Aktivitet: [bold]{valueY}[/]";
-    newseries.fillOpacity = 0.3;
+    newseries.fillOpacity = 0;
+    newseries.strokeWidth = 2;
 
     newchart.cursor = new am4charts.XYCursor();
     newchart.cursor.lineY.opacity = 0;
