@@ -263,23 +263,26 @@ if (window.location.pathname.toString().indexOf("mainsite.htm") >= 0) {
         "timeUnit": "minute",
         "count": 1
     };
+    dateAxis.renderer.grid.template.location = 0.5;
+    dateAxis.renderer.minGridDistance = 50;
     dateAxis.tooltipDateFormat = "HH:mm, d MMMM";
 
     let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis.tooltip.disabled = true;
     valueAxis.title.text = "Luftfugtighed";
+    valueAxis.renderer.minGridDistance = 15;
 
     let series = chart.series.push(new am4charts.LineSeries());
     series.dataFields.dateX = "dato";
     series.dataFields.valueY = "luftfugtighed";
-    series.tooltipText = "Luftfugtighed: [bold]{valueY}[/]";
+    series.tooltipText = "Luftfugtighed: [bold]{valueY}[/]%";
     series.fillOpacity = 0;
     series.strokeWidth = 2;
 
     let useries = chart.series.push(new am4charts.LineSeries());
     useries.dataFields.dateX = "dato";
     useries.dataFields.valueY = "uLuftfugtighed";
-    useries.tooltipText = "Udendørs Luftfugtighed: [bold]{valueY}[/]";
+    useries.tooltipText = "Udendørs Luftfugtighed: [bold]{valueY}[/]%";
     useries.fillOpacity = 0;
     useries.stroke = am4core.color("#ff0000");
     useries.fill = am4core.color("#ff0000");
@@ -301,6 +304,8 @@ if (window.location.pathname.toString().indexOf("mainsite.htm") >= 0) {
         "timeUnit": "minute",
         "count": 1
     };
+    newdateAxis.renderer.grid.template.location = 0.5;
+    newdateAxis.renderer.minGridDistance = 50;
     newdateAxis.tooltipDateFormat = "HH:mm, d MMMM";
 
     let newvalueAxis = newchart.yAxes.push(new am4charts.ValueAxis());
@@ -312,7 +317,6 @@ if (window.location.pathname.toString().indexOf("mainsite.htm") >= 0) {
     let newseries = newchart.series.push(new am4charts.LineSeries());
     newseries.dataFields.dateX = "dato";
     newseries.dataFields.valueY = "aktiv";
-    newseries.tooltipText = "Aktivitet: [bold]{valueY}[/]";
     newseries.fillOpacity = 0;
     newseries.strokeWidth = 2;
 
