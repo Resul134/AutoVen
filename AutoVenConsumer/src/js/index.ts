@@ -249,7 +249,7 @@ let chart: any
 let newchart: any
 
 //Kører kun på main siden, metoder der altid kører på main
-if (window.location.pathname == "/mainsite.htm") {
+if (window.location.pathname.toString().indexOf("mainsite.htm") >= 0) {
     timer();
     getHumid();
     getLatestLog();
