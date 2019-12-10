@@ -50,6 +50,7 @@ namespace AutoVenProxyServer
                         log.Luftfugtighed = Convert.ToDouble(s, CultureInfo.InvariantCulture);
                         log.Dato = DateTime.Now;
                         log.Aktiv = loggingActiveBool; //Latest aktiv status
+                        log.ULuftfugtighed = Convert.ToDouble(outside, CultureInfo.InvariantCulture);
 
                         //Get current status in case of manual overwrite
                         Status status = new Status();

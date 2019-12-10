@@ -14,7 +14,7 @@ namespace AutoVenREST.DBUTil
 
         public void Post(Logging logging)
         {
-            string queryString = "INSERT INTO Logging (Dato, Luftfugtighed, Aktiv) VALUES (@dato, @luft, @aktiv)";
+            string queryString = "INSERT INTO Logging (Dato, Luftfugtighed, Aktiv, ULuftfugtighed) VALUES (@dato, @luft, @aktiv, @uluft)";
 
             using (SqlConnection connection = new SqlConnection(ConnectionString))
             {
@@ -23,6 +23,7 @@ namespace AutoVenREST.DBUTil
                 command.Parameters.AddWithValue("@dato", logging.Dato);
                 command.Parameters.AddWithValue("@luft", logging.Luftfugtighed);
                 command.Parameters.AddWithValue("@aktiv", logging.Aktiv);
+                command.Parameters.AddWithValue("@uluft", logging.ULuftfugtighed);
 
                 connection.Open();
 
@@ -78,6 +79,7 @@ namespace AutoVenREST.DBUTil
                         logging.Dato = reader.GetDateTime(1);
                         logging.Luftfugtighed = reader.GetDouble(2);
                         logging.Aktiv = reader.GetBoolean(3);
+                        logging.ULuftfugtighed = reader.GetDouble(4);
                         LoggingList.Add(logging);
                     }
                 }
@@ -113,6 +115,7 @@ namespace AutoVenREST.DBUTil
                         logging.Dato = reader.GetDateTime(1);
                         logging.Luftfugtighed = reader.GetDouble(2);
                         logging.Aktiv = reader.GetBoolean(3);
+                        logging.ULuftfugtighed = reader.GetDouble(4);
                     }
                 }
                 finally
@@ -150,8 +153,7 @@ namespace AutoVenREST.DBUTil
                         logs.Dato = reader.GetDateTime(1);
                         logs.Luftfugtighed = reader.GetDouble(2);
                         logs.Aktiv = reader.GetBoolean(3);
-
-
+                        logs.ULuftfugtighed = reader.GetDouble(4);
                     }
                 }
                 finally

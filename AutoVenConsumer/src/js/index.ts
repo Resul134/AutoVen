@@ -13,6 +13,7 @@ interface Logging {
     dato: Date;
     luftfugtighed: number;
     aktiv: boolean;
+    uLuftfugtighed: number;
 }
 
 interface Status {
@@ -313,6 +314,7 @@ function getAllLogs() {
             response.data.forEach(element => {
                 delete element["aktiv"]
                 delete element["id"];
+                delete element["uLuftfugtighed"];
                 let tempDate = new Date(element.dato.toString());
                 element.dato = tempDate
             })
@@ -330,6 +332,7 @@ function getAllActivities() {
             response.data.forEach(element => {
                 delete element["luftfugtighed"]
                 delete element["id"];
+                delete element["uLuftfugtighed"];
                 let tempDate = new Date(element.dato.toString());
                 element.dato = tempDate
             })

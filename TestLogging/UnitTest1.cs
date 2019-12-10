@@ -30,7 +30,7 @@ namespace UnitTest
 
             var d = con.Get().Count();
 
-            con.Post(new Logging(Convert.ToDateTime("2019-11-26T00:00:00"), 200.3, false));
+            con.Post(new Logging(Convert.ToDateTime("2019-11-26T00:00:00"), 200.3, false, 50));
 
             var e = con.Get().Count();
 
@@ -52,7 +52,7 @@ namespace UnitTest
             int lengthInit = list.Count();
 
             DateTime date = DateTime.Now - TimeSpan.FromDays(1830);
-            Logging log = new Logging(date, 50, false);
+            Logging log = new Logging(date, 50, false, 50);
             con.Post(log);
 
             IEnumerable<Logging> listActual = con.Get();
