@@ -5,6 +5,7 @@ import axios, {
 import * as am4core from "../../node_modules/@amcharts/amcharts4/core";
 import * as am4charts from "../../node_modules/@amcharts/amcharts4/charts";
 
+
 var MyStorage = window.localStorage;
 
 interface Logging {
@@ -174,7 +175,7 @@ function getLatestLog(): void {
 function logudFunc(): void {
 
     MyStorage.removeItem('logged');
-    location.href = "logind.htm";
+    location.href = "index.htm";
 }
 
 function loginFuc(): void {
@@ -197,7 +198,7 @@ function loginFuc(): void {
             if (admindUser == loginBruger && AdminPass == loginKodeord) {
                 MyStorage.setItem('logged', 'true')
                 logOutput.innerHTML = "Success";
-                location.href = "index.htm";
+                location.href = "mainsite.htm";
             }
             else {
                 logOutput.innerHTML = randomError;
@@ -248,7 +249,7 @@ let chart: any
 let newchart: any
 
 //Kører kun på main siden, metoder der altid kører på main
-if (window.location.pathname.toString().indexOf("logind.htm") < 0) {
+if (window.location.pathname == "/mainsite.htm") {
     timer();
     getHumid();
     getLatestLog();
