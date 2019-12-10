@@ -48,7 +48,7 @@ namespace AutoVenProxyServer
                         //New logging
                         Logging log = new Logging();
                         log.Luftfugtighed = Convert.ToDouble(s, CultureInfo.InvariantCulture);
-                        log.Dato = DateTime.Now;
+                        log.Dato = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss"));
                         log.Aktiv = loggingActiveBool; //Latest aktiv status
                         log.ULuftfugtighed = Convert.ToDouble(outside, CultureInfo.InvariantCulture);
 
