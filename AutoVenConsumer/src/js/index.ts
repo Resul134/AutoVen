@@ -77,10 +77,13 @@ if (turnOffButton != null) {
 }
 
 function getDate(): String {
-
     let thisDate: Date = new Date();
     let options = { day: "2-digit" }
-    let dateString: string = thisDate.getFullYear() + "-" + (thisDate.getMonth() + 1) + "-" + thisDate.toLocaleDateString("en-US", options) + "T" + thisDate.getHours() + ":" + thisDate.getMinutes() + ":" + thisDate.getSeconds();
+    let currentHours = thisDate.getHours().toString();
+    currentHours = ("0" + currentHours).slice(-2);
+    let currentMin = (thisDate.getMinutes()<10?'0':'') + thisDate.getMinutes();
+    let currentSec = (thisDate.getSeconds()<10?'0':'') + thisDate.getSeconds();
+    let dateString: string = thisDate.getFullYear() + "-" + (thisDate.getMonth() + 1) + "-" + thisDate.toLocaleDateString("en-US", options) + "T" + currentHours + ":" + currentMin + ":" + currentSec;
 
     return dateString;
 }
@@ -108,6 +111,8 @@ function turnOff() {
     axios.put<Status>(statusURI, { id: 1, dato: getDate(), allowChange: false })
         .then((response: AxiosResponse) => {
             postLog(false);
+        }).catch(err => {
+            console.log(err.response)
         })
 }
 
