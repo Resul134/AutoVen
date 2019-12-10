@@ -290,6 +290,7 @@ if (window.location.pathname == "/mainsite.htm") {
     newvalueAxis.tooltip.disabled = true;
     newvalueAxis.title.text = "Aktivitet";
     newvalueAxis.max = 1;
+    newvalueAxis.renderer.minGridDistance = 100;
 
     let newseries = newchart.series.push(new am4charts.LineSeries());
     newseries.dataFields.dateX = "dato";
