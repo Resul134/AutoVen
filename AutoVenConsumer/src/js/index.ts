@@ -33,6 +33,7 @@ let urlgetLast: string = "https://autovenrest.azurewebsites.net/api/Logging/getL
 let urlLogPost: string = "https://autovenrest.azurewebsites.net/api/Logging/";
 
 let statusURI: string = "https://autovenrest.azurewebsites.net/api/Status/1/";
+let tilstandUrl: string = "https://autovenrest.azurewebsites.net/api/Status/";
 
 let humidInside: HTMLDivElement = <HTMLDivElement>document.getElementById("humidInside")
 
@@ -97,6 +98,7 @@ function postLog(status: boolean) {
                 getLatestLog();
                 getAllLogs();
                 getAllActivities();
+                GetTilstand()
             })
         })
 }
@@ -121,6 +123,7 @@ function auto() {
     axios.put<Status>(statusURI, { id: 1, dato: getDate(), allowChange: true })
         .then((response: AxiosResponse) => {
             getLatestLog()
+            GetTilstand()
         })
 }
 
@@ -250,6 +253,8 @@ if (window.location.pathname == "/mainsite.htm") {
     timer();
     getHumid();
     getLatestLog();
+    GetTilstand();
+
     chart = am4core.create("chartdiv", am4charts.XYChart);
     chart.paddingRight = 20;
 
@@ -347,4 +352,19 @@ function getAllActivities() {
             newchart.data = getData;
             console.log(getData)
         });
+}
+
+function GetTilstand(){
+    let tilstandParag: HTMLParagraphElement = <HTMLParagraphElement>document.getElementById("tilstand");
+    
+    axios.get<Status>(tilstandUrl).then((response: AxiosResponse<Status>) => {
+        if(response.data.allowChange){
+            tilstandParag.innerHTML = "Automatisk";
+            tilstandParag.className = "on"
+        } 
+        else {
+            tilstandParag.innerHTML = "Manuel";
+            tilstandParag.className = "off";
+        }
+    })
 }

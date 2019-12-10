@@ -18,20 +18,20 @@
         <div class="row content">
             <div class="col-sm-4">
                 <p class="textcenter">Dit ventilationssystem er <span class="off" id="status">Slukket</span> </p>
+                <p class="textcenter">Tilstand: <span id="tilstand"></span></p>
                 <img id="fan" class="center" src="https://i.imgur.com/EnWyv7g.png">
-                <div id="humidOutput" class="textcenter"></div>
+                <div style="margin-top: 20px;" id="humidOutput" class="textcenter"></div>
                 <div id="humidInside" class="textcenter"></div>
             </div>
             <div class="col-sm-1"></div>
             <div class="col-sm-7">
                 <!--Grafer her-->
-                <div id="chartdiv"></div>
+                <div id="chartdiv" style="margin-top: 85px;"></div>
                 <div id="newchartdiv"></div>
             </div>
         </div>
         <div class="content">
-            <p class="textcenter">Følgende knapper stopper den automatiske tænd/sluk funktion og holder <br>
-                systemet tændt/slukket alt efter hvad du vælger, indtil ændrer det igen.</p>
+            <p class="textcenter">Tænd, sluk eller sæt systemet til automatisk tilstand.</p>
             <div class="center" style="width:410px;">
                 <button id="onButton" style="margin-right: 20px;" class="btn grey">Tænd</button>
                 <button id="offButton" style="margin-right: 20px;" class="btn grey">Sluk</button>
