@@ -41,7 +41,7 @@ namespace AutoVenProxyServer
 
                         //Get latest active status
                         List<Logging> loggingActive = new List<Logging>();
-                        string loggingActiveStr = c.GetStringAsync("http://localhost:50850/api/Logging").Result;
+                        string loggingActiveStr = c.GetStringAsync("https://autovenrest.azurewebsites.net/api/Logging").Result;
                         loggingActive = JsonConvert.DeserializeObject<List<Logging>>(loggingActiveStr);
                         bool loggingActiveBool = loggingActive.Last().Aktiv;
 
@@ -53,7 +53,7 @@ namespace AutoVenProxyServer
 
                         //Get current status in case of manual overwrite
                         Status status = new Status();
-                        string allowChange = c.GetStringAsync("http://localhost:50850/api/Status").Result;
+                        string allowChange = c.GetStringAsync("https://autovenrest.azurewebsites.net/api/Status").Result;
                         status = JsonConvert.DeserializeObject<Status>(allowChange);
 
                         if (Convert.ToDouble(s, CultureInfo.InvariantCulture) >= Convert.ToDouble(outside, CultureInfo.InvariantCulture))
@@ -68,7 +68,7 @@ namespace AutoVenProxyServer
 
                         StringContent content = new StringContent(msg, Encoding.UTF8, "application/json");
 
-                        await c.PostAsync("http://localhost:50850/api/Logging", content);
+                        await c.PostAsync("https://autovenrest.azurewebsites.net/api/Logging", content);
 
                     }
                 }
