@@ -93,7 +93,7 @@ function postLog(status: boolean) {
     axios.get<Logging>(urlgetLast)
         .then((response: AxiosResponse<Logging>) => {
             let dataOne: Logging = response.data;
-            axios.post<Logging>(urlLogPost, { dato: getDate(), luftfugtighed: dataOne.luftfugtighed, aktiv: status }).then(() => {
+            axios.post<Logging>(urlLogPost, { dato: getDate(), luftfugtighed: dataOne.luftfugtighed, aktiv: status, uLuftfugtighed: dataOne.uLuftfugtighed }).then(() => {
                 getLatestLog();
                 getAllLogs();
                 getAllActivities();
