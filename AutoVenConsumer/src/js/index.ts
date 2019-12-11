@@ -98,7 +98,7 @@ function postLog(status: boolean) {
                 getLatestLog();
                 getAllLogs();
                 getAllActivities();
-                GetTilstand()
+                GetTilstand();
             })
         })
 }
@@ -165,7 +165,6 @@ function getLatestLog(): void {
             humidInside.innerHTML = JSON.stringify(dataOne);
 
             longHtml2 += "Fugtighed indenfor: " + dataOne.luftfugtighed.toPrecision(3) + "%";
-
 
             longHtml2 += "</p>";
             humidInside.innerHTML = longHtml2;
@@ -245,8 +244,8 @@ function timer(): void {
     }, 1000)
 }
 
-let chart: any
-let newchart: any
+let chart: any;
+let newchart: any;
 
 //Kører kun på main siden, metoder der altid kører på main
 if (window.location.pathname.toString().indexOf("mainsite.htm") >= 0) {
@@ -257,20 +256,29 @@ if (window.location.pathname.toString().indexOf("mainsite.htm") >= 0) {
 
     chart = am4core.create("chartdiv", am4charts.XYChart);
     chart.paddingRight = 20;
+    chart.events.on("ready", function() {
+        let before = new Date();
+        let now = new Date();
+        dateAxis.zoomToDates(
+            before.setDate(before.getDate() - 1),
+            now.setDate(now.getDate())
+        );
+    })
 
     let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
     dateAxis.baseInterval = {
         "timeUnit": "minute",
         "count": 1
     };
-    dateAxis.renderer.grid.template.location = 0.5;
+    dateAxis.renderer.grid.template.location = 0;
     dateAxis.renderer.minGridDistance = 50;
     dateAxis.tooltipDateFormat = "HH:mm, d MMMM";
 
     let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis.tooltip.disabled = true;
     valueAxis.title.text = "Luftfugtighed";
-    valueAxis.renderer.minGridDistance = 15;
+    valueAxis.renderer.minGridDistance = 20;
+    valueAxis.min = 0;
 
     let series = chart.series.push(new am4charts.LineSeries());
     series.dataFields.dateX = "dato";
@@ -297,14 +305,24 @@ if (window.location.pathname.toString().indexOf("mainsite.htm") >= 0) {
     getAllLogs();
 
     newchart = am4core.create("newchartdiv", am4charts.XYChart);
-    chart.paddingRight = 20;
+    newchart.paddingRight = 20;
+    
+    newchart.events.on("ready", function() {
+        let before = new Date();
+        let now = new Date();
+        newdateAxis.zoomToDates(
+            before.setDate(before.getDate() - 1),
+            now.setDate(now.getDate())
+        );
+    })
+    
 
     let newdateAxis = newchart.xAxes.push(new am4charts.DateAxis());
     newdateAxis.baseInterval = {
         "timeUnit": "minute",
         "count": 1
     };
-    newdateAxis.renderer.grid.template.location = 0.5;
+    newdateAxis.renderer.grid.template.location = 0;
     newdateAxis.renderer.minGridDistance = 50;
     newdateAxis.tooltipDateFormat = "HH:mm, d MMMM";
 
@@ -312,6 +330,7 @@ if (window.location.pathname.toString().indexOf("mainsite.htm") >= 0) {
     newvalueAxis.tooltip.disabled = true;
     newvalueAxis.title.text = "Aktivitet";
     newvalueAxis.max = 1;
+    newvalueAxis.paddingRight = 15;
     newvalueAxis.renderer.minGridDistance = 100;
 
     let newseries = newchart.series.push(new am4charts.LineSeries());
