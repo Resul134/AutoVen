@@ -41,7 +41,7 @@ let humidInside: HTMLDivElement = <HTMLDivElement>document.getElementById("humid
 let humidOutput: HTMLDivElement = <HTMLDivElement>document.getElementById("humidOutput")
 
 
-let urlHumid: string = "http://api.openweathermap.org/data/2.5/weather?q=Roskilde,DK&APPID=f0f18be3bdaa24b17b922c92f5cd9279"
+let urlHumid: string = "https://api.openweathermap.org/data/2.5/weather?q=Roskilde,DK&APPID=f0f18be3bdaa24b17b922c92f5cd9279"
 
 //Login
 
