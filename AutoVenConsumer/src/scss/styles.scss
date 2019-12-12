@@ -1,6 +1,8 @@
 body 
 {
     background-color: #f4f4f4;
+    width: 100%;
+    overflow: hidden;
 }
 
 .grey 
@@ -136,4 +138,9 @@ body
   g[aria-labelledby="id-201-title"]
   {
       display: none;
+  }
+
+.login{
+    transition: transform 1.5s cubic-bezier(1,.03,.65,.84);
+     transform: translateX(100vw);
   }

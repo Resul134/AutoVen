@@ -192,9 +192,14 @@ function loginFuc(): void {
 
         try {
             if (admindUser == loginBruger && AdminPass == loginKodeord) {
-                MyStorage.setItem('logged', 'true')
+                MyStorage.setItem('logged', 'true');
                 logOutput.innerHTML = "Success";
-                location.href = "mainsite.htm";
+                let logo = document.getElementById("loginLogo");
+                logo.className = " login";
+                setTimeout(() => {
+                    location.href = "mainsite.htm";
+                }, 900);
+                
             }
             else {
                 logOutput.innerHTML = randomError;
