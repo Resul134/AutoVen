@@ -131,11 +131,10 @@ function getHumid(): void {
     axios.get(urlHumid)
         .then((main: AxiosResponse) => {
             let data = main.data["main"]["humidity"];
-            let longHtml: string = "<p>";
+            let longHtml: string = "";
 
-            longHtml += "Fugtighed udenfor: " + data + "%";
+            longHtml += "Udenfor: " + data + "%";
 
-            longHtml += "</p>";
             humidOutput.innerHTML = longHtml;
         })
         .catch((error: AxiosError) => {
@@ -150,7 +149,7 @@ function getLatestLog(): void {
         .then((response: AxiosResponse<Logging>) => {
             let dataOne: Logging = response.data;
 
-            let longHtml2: string = "<p>";
+            let longHtml2: string = "";
 
             if (dataOne.aktiv) {
                 aktivitet.className = "on";
@@ -164,9 +163,7 @@ function getLatestLog(): void {
             }
             humidInside.innerHTML = JSON.stringify(dataOne);
 
-            longHtml2 += "Fugtighed indenfor: " + dataOne.luftfugtighed.toPrecision(3) + "%";
-
-            longHtml2 += "</p>";
+            longHtml2 += "Indenfor: " + dataOne.luftfugtighed.toPrecision(3) + "%";
             humidInside.innerHTML = longHtml2;
         });
 }
